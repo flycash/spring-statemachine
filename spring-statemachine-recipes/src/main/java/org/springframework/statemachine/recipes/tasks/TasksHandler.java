@@ -107,13 +107,7 @@ public class TasksHandler {
 			if (persist != null) {
 				final LocalStateMachineInterceptor interceptor = new LocalStateMachineInterceptor(persist);
 				stateMachine.getStateMachineAccessor()
-					.doWithAllRegions(new StateMachineFunction<StateMachineAccess<String, String>>() {
-
-					@Override
-					public void apply(StateMachineAccess<String, String> function) {
-						function.addStateMachineInterceptor(interceptor);
-					}
-				});
+					.doWithAllRegions(function -> function.addStateMachineInterceptor(interceptor));
 			}
 		} catch (Exception e) {
 			throw new StateMachineException("Error building state machine from tasks", e);
@@ -173,14 +167,7 @@ public class TasksHandler {
 		}
 
 		stateMachine.stopReactively().block();
-		stateMachine.getStateMachineAccessor()
-			.doWithAllRegions(new StateMachineFunction<StateMachineAccess<String, String>>() {
-
-			@Override
-			public void apply(StateMachineAccess<String, String> function) {
-				function.resetStateMachine(context);
-			}
-		});
+		stateMachine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(context));
 		stateMachine.startReactively().block();
 	}
 

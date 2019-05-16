@@ -69,13 +69,7 @@ public abstract class AbstractStateMachinePersister<S, E, T> implements StateMac
 	public final StateMachine<S, E> restore(StateMachine<S, E> stateMachine, T contextObj) throws Exception {
 		final StateMachineContext<S, E> context = stateMachinePersist.read(contextObj);
 		stateMachine.stopReactively().block();
-		stateMachine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<S, E>>() {
-
-			@Override
-			public void apply(StateMachineAccess<S, E> function) {
-				function.resetStateMachine(context);
-			}
-		});
+		stateMachine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(context));
 		stateMachine.startReactively().block();
 		return stateMachine;
 	}

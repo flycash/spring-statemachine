@@ -1259,13 +1259,7 @@ public class DocsConfigurationSampleTests extends AbstractStateMachineTests {
 
 			void s1() {
 // tag::snippetZA[]
-				stateMachine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<String,String>>() {
-
-					@Override
-					public void apply(StateMachineAccess<String, String> function) {
-						function.setRelay(stateMachine);
-					}
-				});
+				stateMachine.getStateMachineAccessor().doWithAllRegions(function -> function.setRelay(stateMachine));
 
 				stateMachine.getStateMachineAccessor()
 					.doWithAllRegions(access -> access.setRelay(stateMachine));
@@ -1274,13 +1268,7 @@ public class DocsConfigurationSampleTests extends AbstractStateMachineTests {
 
 			void s2() {
 // tag::snippetZB[]
-				stateMachine.getStateMachineAccessor().doWithRegion(new StateMachineFunction<StateMachineAccess<String,String>>() {
-
-					@Override
-					public void apply(StateMachineAccess<String, String> function) {
-						function.setRelay(stateMachine);
-					}
-				});
+				stateMachine.getStateMachineAccessor().doWithRegion(function -> function.setRelay(stateMachine));
 
 				stateMachine.getStateMachineAccessor()
 					.doWithRegion(access -> access.setRelay(stateMachine));
@@ -1372,21 +1360,15 @@ public class DocsConfigurationSampleTests extends AbstractStateMachineTests {
 
 			void addInterceptor() {
 				stateMachine.getStateMachineAccessor()
-					.doWithRegion(new StateMachineFunction<StateMachineAccess<String, String>>() {
-
-					@Override
-					public void apply(StateMachineAccess<String, String> function) {
-						function.addStateMachineInterceptor(
-								new StateMachineInterceptorAdapter<String, String>() {
-							@Override
-							public Exception stateMachineError(StateMachine<String, String> stateMachine,
-									Exception exception) {
-								// return null indicating handled error
-								return exception;
-							}
-						});
-					}
-				});
+						.doWithRegion(function ->
+							function.addStateMachineInterceptor(new StateMachineInterceptorAdapter<String, String>() {
+								@Override
+								public Exception stateMachineError(StateMachine<String, String> stateMachine,
+																   Exception exception) {
+									return exception;
+								}
+							})
+						);
 
 			}
 // end::snippet1[]

@@ -24,6 +24,7 @@ package org.springframework.statemachine.access;
  * @param <I> the function type
  * @see StateMachineAccessor
  */
+@Deprecated
 public interface StateMachineFunction<I> {
 
 	/**

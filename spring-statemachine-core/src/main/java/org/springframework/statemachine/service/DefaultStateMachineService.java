@@ -165,13 +165,7 @@ public class DefaultStateMachineService<S, E> implements StateMachineService<S, 
 		}
 		stateMachine.stopReactively().block();
 		// only go via top region
-		stateMachine.getStateMachineAccessor().doWithRegion(new StateMachineFunction<StateMachineAccess<S, E>>() {
-
-			@Override
-			public void apply(StateMachineAccess<S, E> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		stateMachine.getStateMachineAccessor().doWithRegion(function -> function.resetStateMachine(stateMachineContext));
 		return stateMachine;
 	}
 

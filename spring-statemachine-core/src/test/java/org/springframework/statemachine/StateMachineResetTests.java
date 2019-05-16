@@ -78,13 +78,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		ExtendedState extendedState = new DefaultExtendedState(variables);
 		DefaultStateMachineContext<States,Events> stateMachineContext = new DefaultStateMachineContext<States, Events>(States.S12, Events.I, null, extendedState);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<States,Events>>() {
-
-			@Override
-			public void apply(StateMachineAccess<States, Events> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(States.S0, States.S1, States.S12));
@@ -102,13 +96,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		ExtendedState extendedState = new DefaultExtendedState(variables);
 		DefaultStateMachineContext<States,Events> stateMachineContext = new DefaultStateMachineContext<States, Events>(States.S211, Events.C, null, extendedState);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<States,Events>>() {
-
-			@Override
-			public void apply(StateMachineAccess<States, Events> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(States.S0, States.S2, States.S21, States.S211));
@@ -126,13 +114,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		ExtendedState extendedState = new DefaultExtendedState(variables);
 		DefaultStateMachineContext<States,Events> stateMachineContext = new DefaultStateMachineContext<States, Events>(States.S2, Events.C, null, extendedState);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<States,Events>>() {
-
-			@Override
-			public void apply(StateMachineAccess<States, Events> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(States.S0, States.S2, States.S21, States.S211));
@@ -157,13 +139,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		DefaultStateMachineContext<TestStates, TestEvents> stateMachineContext =
 				new DefaultStateMachineContext<TestStates, TestEvents>(childs, TestStates.S2, TestEvents.E1, null, null);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<TestStates, TestEvents>>() {
-
-			@Override
-			public void apply(StateMachineAccess<TestStates, TestEvents> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(TestStates.S2, TestStates.S21, TestStates.S31));
@@ -187,13 +163,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		DefaultStateMachineContext<TestStates, TestEvents> stateMachineContext =
 				new DefaultStateMachineContext<TestStates, TestEvents>(childs, TestStates.S2, null, null, null);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<TestStates, TestEvents>>() {
-
-			@Override
-			public void apply(StateMachineAccess<TestStates, TestEvents> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(TestStates.S2, TestStates.S21, TestStates.S31));
@@ -215,13 +185,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		ExtendedState extendedState = new DefaultExtendedState(variables);
 		DefaultStateMachineContext<States,Events> stateMachineContext = new DefaultStateMachineContext<States, Events>(States.S0, null, null, extendedState);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<States,Events>>() {
-
-			@Override
-			public void apply(StateMachineAccess<States, Events> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat((Integer)machine.getExtendedState().getVariables().get("count"), is(1));
@@ -244,13 +208,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		assertThat((Integer)machine.getExtendedState().getVariables().get("foo"), is(0));
 
 		doStopAndAssert(machine);
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<States,Events>>() {
-
-			@Override
-			public void apply(StateMachineAccess<States, Events> function) {
-				function.resetStateMachine(null);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(null));
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(States.S0, States.S1, States.S11));
 		assertThat(machine.getExtendedState().getVariables().size(), is(0));
@@ -272,13 +230,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		DefaultStateMachineContext<States, Events> stateMachineContext = new DefaultStateMachineContext<States, Events>(
 				States.S11, null, null, null);
 		machine.getStateMachineAccessor()
-				.doWithAllRegions(new StateMachineFunction<StateMachineAccess<States, Events>>() {
-
-					@Override
-					public void apply(StateMachineAccess<States, Events> function) {
-						function.resetStateMachine(stateMachineContext);
-					}
-				});
+				.doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(States.S0, States.S1, States.S11));
@@ -295,13 +247,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 
 		DefaultStateMachineContext<States, Events> stateMachineContext = new DefaultStateMachineContext<States, Events>(States.S1, null,
 				null, null);
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<States,Events>>() {
-
-			@Override
-			public void apply(StateMachineAccess<States, Events> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		Thread.sleep(1100);
@@ -345,13 +291,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		ExtendedState extendedState = new DefaultExtendedState(variables);
 		DefaultStateMachineContext<States,Events> stateMachineContext = new DefaultStateMachineContext<States, Events>(States.S0, null, null, extendedState);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<States,Events>>() {
-
-			@Override
-			public void apply(StateMachineAccess<States, Events> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 		doStartAndAssert(machine);
 
 		assertThat((Integer)machine.getExtendedState().getVariables().get("count1"), is(1));
@@ -382,13 +322,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		DefaultStateMachineContext<MyState, MyEvent> stateMachineContext = new DefaultStateMachineContext<MyState, MyEvent>(
 				SubState.SUB_NEXT, null, null, null);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<MyState, MyEvent>>() {
-
-			@Override
-			public void apply(StateMachineAccess<MyState, MyEvent> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(SuperState.PARENT, SubState.SUB_NEXT));
@@ -404,13 +338,7 @@ public class StateMachineResetTests extends AbstractStateMachineTests {
 		DefaultStateMachineContext<MyState, MyEvent> stateMachineContext = new DefaultStateMachineContext<MyState, MyEvent>(
 				SuperState.INITIAL, null, null, null);
 
-		machine.getStateMachineAccessor().doWithAllRegions(new StateMachineFunction<StateMachineAccess<MyState, MyEvent>>() {
-
-			@Override
-			public void apply(StateMachineAccess<MyState, MyEvent> function) {
-				function.resetStateMachine(stateMachineContext);
-			}
-		});
+		machine.getStateMachineAccessor().doWithAllRegions(function -> function.resetStateMachine(stateMachineContext));
 
 		doStartAndAssert(machine);
 		assertThat(machine.getState().getIds(), containsInAnyOrder(SuperState.INITIAL));
